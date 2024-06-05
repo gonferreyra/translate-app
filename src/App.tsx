@@ -1,12 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useDebounce, useSearchQuery } from "./lib/hooks";
 
-// Hacer active clases para los botones
+// Lenguajes a agrega. it, de
+// el flojo del debounde es: toma el input, devuelve el string que se va a buscar para el fetch con un delay.
 
 function App() {
   const [textToTranslate, setTextToTranslate] = useState("Hello, how are you?");
-  const [translatedText, setTranslatedText] = useState("");
+  // const [translatedTextInput, setTranslatedText] = useState("");
   const [lenguageFrom, setLenguageFrom] = useState("en");
   const [lenguageTo, setLenguageTo] = useState("fr");
+
+  //debounce - devolviendo resultados cada cierto tiempo
 
   const textLength = textToTranslate.length;
 
@@ -14,15 +18,12 @@ function App() {
     setTextToTranslate(e.target.value);
   };
 
-  useEffect(() => {
-    const fetchUrl = async () => {
-      const url = `https://api.mymemory.translated.net/get?q=${textToTranslate}?&langpair=${lenguageFrom}|${lenguageTo}`;
-      const res = await fetch(url);
-      const data = await res.json();
-      setTranslatedText(data.responseData.translatedText);
-    };
-    fetchUrl();
-  }, []);
+  const { debouncedSearchText } = useDebounce(textToTranslate);
+  const { translatedText, isLoading } = useSearchQuery(
+    debouncedSearchText,
+    lenguageFrom,
+    lenguageTo,
+  );
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,7 +38,7 @@ function App() {
     }
 
     const data = await response.json();
-    // return data.responseData.translatedText;
+
     setTranslatedText(data.responseData.translatedText);
   };
 
