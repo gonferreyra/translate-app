@@ -21,18 +21,17 @@ const fetchTranslation = async (
 
 export function useSearchQuery(
   textToTranslate: string,
-  lenguageFrom: string,
-  lenguageTo: string,
+  languageFrom: string,
+  languageTo: string,
 ) {
   const { data, isLoading } = useQuery({
-    queryKey: ["translate", textToTranslate, lenguageFrom, lenguageTo],
-    queryFn: () => fetchTranslation(textToTranslate, lenguageFrom, lenguageTo),
+    queryKey: ["translate", textToTranslate, languageFrom, languageTo],
+    queryFn: () => fetchTranslation(textToTranslate, languageFrom, languageTo),
     staleTime: 1000 * 60 * 60, // 1 hora
     refetchOnWindowFocus: false,
     retry: false,
     enabled: Boolean(textToTranslate),
   });
-  console.log(data);
 
   const translatedText = data?.responseData?.translatedText || "";
 
