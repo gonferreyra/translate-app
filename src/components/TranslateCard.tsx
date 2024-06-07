@@ -1,46 +1,46 @@
 import copy from "copy-to-clipboard";
 import toast from "react-hot-toast";
 import { handleSpeech } from "../lib/utils";
+import { useTranslateContext } from "../lib/hooks";
+import LanguageButton from "./LanguageButton";
 
-type TranslateCardProps = {
-  languageFrom: string;
-  setLanguageFrom: (language: string) => void;
-  textToTranslate: string;
-  setTextToTranslate: (text: string) => void;
-};
+export default function TranslateCard() {
+  const {
+    languageFrom,
+    handleChangeLanguageFrom,
+    textToTranslate,
+    handleChangeTextToTranslate,
+  } = useTranslateContext();
 
-export default function TranslateCard({
-  languageFrom,
-  setLanguageFrom,
-  textToTranslate,
-  setTextToTranslate,
-}: TranslateCardProps) {
   const textLength = textToTranslate.length;
+
   return (
     <form className="mx-6 rounded-3xl border border-[#4D5562] bg-[#212936cc]/[0.9] px-6 text-sm font-bold lg:basis-[50%]">
       <div className="flex gap-6 overflow-x-auto px-2 py-4 text-sm">
-        <button type="button">Detect Language</button>
-        <button
-          type="button"
-          onClick={() => setLanguageFrom("en")}
-          className={`px-2 py-2 ${languageFrom === "en" ? "bg-[#4D5562] text-white" : ""} rounded-xl transition focus:bg-[#4D5562] focus:text-white`}
-        >
-          English
-        </button>
-        <button
-          type="button"
-          onClick={() => setLanguageFrom("fr")}
-          className={`px-2 py-2 ${languageFrom === "fr" ? "bg-[#4D5562] text-white" : ""} rounded-xl transition focus:bg-[#4D5562] focus:text-white`}
-        >
-          French
-        </button>
-        <button
-          type="button"
-          onClick={() => setLanguageFrom("es")}
-          className={`px-2 py-2 ${languageFrom === "es" ? "bg-[#4D5562] text-white" : ""} rounded-xl transition focus:bg-[#4D5562] focus:text-white`}
-        >
-          Spanish
-        </button>
+        <LanguageButton
+          language="detect"
+          currentLanguage={languageFrom}
+          label="Detect Language"
+          disabled={true}
+        />
+        <LanguageButton
+          language="en"
+          currentLanguage={languageFrom}
+          label="English"
+          onClick={() => handleChangeLanguageFrom("en")}
+        />
+        <LanguageButton
+          language="fr"
+          currentLanguage={languageFrom}
+          label="French"
+          onClick={() => handleChangeLanguageFrom("fr")}
+        />
+        <LanguageButton
+          language="es"
+          currentLanguage={languageFrom}
+          label="Spanish"
+          onClick={() => handleChangeLanguageFrom("es")}
+        />
       </div>
       <div className="h-[1px] bg-[#4d5562]" />
       <div className="relative">
@@ -48,7 +48,7 @@ export default function TranslateCard({
           rows={6}
           className="w-full resize-none border-none bg-transparent py-6 text-[#f9fafb] outline-none"
           value={textToTranslate}
-          onChange={(e) => setTextToTranslate(e.target.value)}
+          onChange={(e) => handleChangeTextToTranslate(e.target.value)}
           maxLength={500}
         />
         <p className="absolute bottom-0 right-0 text-xs font-medium">

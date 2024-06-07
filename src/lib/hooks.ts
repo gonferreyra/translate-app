@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { TranslateContext } from "../contexts/TranslationContextProvider";
 
 type TranslationApiResponse = {
   responseData: {
@@ -50,4 +51,16 @@ export function useDebounce(textToFetch: string, delay: number = 1000) {
   }, [textToFetch, delay]);
 
   return { debouncedSearchText };
+}
+
+export function useTranslateContext() {
+  const context = useContext(TranslateContext);
+
+  if (!context) {
+    throw new Error(
+      "useTranslateContext must be used within a TranslateContextProvider",
+    );
+  }
+
+  return context;
 }
