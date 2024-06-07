@@ -11,7 +11,7 @@ function App() {
           <div className="w-full pb-12 pt-16 xl:pt-24">
             <img className="mx-auto" src="/logo.svg" alt="" />
           </div>
-          <div className="mx-auto mb-8 flex max-w-screen-xl flex-col gap-6 text-[#4D5562] lg:mx-10 xl:flex-row xl:gap-0">
+          <div className="mb-8 flex max-w-screen-xl flex-col gap-6 text-[#4D5562] lg:mx-10 xl:mx-auto xl:flex-row xl:gap-0">
             <TranslateCard />
 
             <TranslatedCard />
