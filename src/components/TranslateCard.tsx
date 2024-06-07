@@ -1,5 +1,6 @@
 import copy from "copy-to-clipboard";
 import toast from "react-hot-toast";
+import { handleSpeech } from "../lib/utils";
 
 type TranslateCardProps = {
   languageFrom: string;
@@ -59,6 +60,7 @@ export default function TranslateCard({
           <button
             type="button"
             className="mr-2 rounded-xl border-2 border-[#4D5562] px-1 py-1"
+            onClick={() => handleSpeech(textToTranslate)}
           >
             <img src="/sound_max_fill.svg" alt="" />
           </button>

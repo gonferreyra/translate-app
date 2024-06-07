@@ -1,19 +1,25 @@
 import copy from "copy-to-clipboard";
 import toast from "react-hot-toast";
+import { handleSpeech } from "../lib/utils";
+import Spinner from "./Spinner";
 
 type TranslatedCardProps = {
   setLanguageTo: (language: string) => void;
   languageTo: string;
   translatedText: string;
+  isLoading: boolean;
 };
 
 export default function TranslatedCard({
   setLanguageTo,
   languageTo,
   translatedText,
+  isLoading,
 }: TranslatedCardProps) {
   return (
-    <div className="mx-6 rounded-3xl border border-[#4D5562] bg-[#212936cc]/[0.9] px-6 text-sm font-bold lg:basis-[50%]">
+    <div className="relative mx-6 rounded-3xl border border-[#4D5562] bg-[#121826]/[0.9] px-6 text-sm font-bold lg:basis-[50%]">
+      {isLoading && <Spinner />}
+
       <div className="flex items-center justify-between overflow-x-auto text-sm">
         <div className="flex gap-6 py-4">
           <button
@@ -52,7 +58,10 @@ export default function TranslatedCard({
       </div>
       <div className="my-6 flex items-center justify-between">
         <div className="">
-          <button className="mr-2 rounded-xl border-2 border-[#4D5562] px-1 py-1">
+          <button
+            className="mr-2 rounded-xl border-2 border-[#4D5562] px-1 py-1"
+            onClick={() => handleSpeech(translatedText)}
+          >
             <img src="/sound_max_fill.svg" alt="" />
           </button>
           <button
